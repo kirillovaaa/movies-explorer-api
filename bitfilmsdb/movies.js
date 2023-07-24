@@ -25,7 +25,6 @@ const movieSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    ы,
   },
 
   image: {
@@ -33,8 +32,11 @@ const movieSchema = new mongoose.Schema({
     required: true,
 
     validate: {
-      validator: (value) => validator.isURL(value),
-      message: "Ссылка неккоректна",
+      validator: (v) =>
+        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
+          v
+        ),
+      message: "Неправильный формат ссылки",
     },
   },
 
@@ -43,18 +45,23 @@ const movieSchema = new mongoose.Schema({
     required: true,
 
     validate: {
-      validator: (value) => validator.isURL(value),
-      message: "Ссылка неккоректна",
+      validator: (v) =>
+        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
+          v
+        ),
+      message: "Неправильный формат ссылки",
     },
   },
 
   thumbnail: {
     type: String,
     required: true,
-
     validate: {
-      validator: (value) => validator.isURL(value),
-      message: "Ссылка неккоректна",
+      validator: (v) =>
+        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
+          v
+        ),
+      message: "Неправильный формат ссылки",
     },
   },
 
