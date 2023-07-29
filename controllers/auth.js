@@ -66,7 +66,7 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then((user) => {
       const dbUser = user.toObject();
-      delete dbUser.password;
+      delete dbUser.password; // убрать пароль из полученного объекта
       res.status(201).send(dbUser);
     })
     .catch((err) => {
