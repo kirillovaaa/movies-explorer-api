@@ -53,7 +53,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// обработчик логгера
+// логгер запросов
 app.use(requestLogger);
 
 // незащищенные роуты
@@ -65,12 +65,7 @@ app.use(authMiddleware);
 // защищенные роуты
 app.use(routes);
 
-// обработка роута "*" - ошибка 404
-app.use((req, res, next) => {
-  next(new NotFoundError());
-});
-
-// обработчик логгера - ошибки
+// логгер ошибок
 app.use(errorLogger);
 
 // отлов ошибки

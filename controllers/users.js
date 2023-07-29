@@ -10,7 +10,7 @@ module.exports.getMe = (req, res, next) => {
   const { _id } = req.user;
 
   User.findById(_id)
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => next(new ServerError(err)));
 };
 // обновляем информацию о пользователе
@@ -22,7 +22,7 @@ module.exports.updateUser = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true },
   )
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new InvalidRequestError());
