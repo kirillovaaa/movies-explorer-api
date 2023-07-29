@@ -79,5 +79,5 @@ app.use(errorMiddleware);
 
 app.listen(port, () => {
   /* eslint no-console: "off" */
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
 });
