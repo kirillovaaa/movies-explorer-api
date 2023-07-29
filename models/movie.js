@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -32,11 +31,10 @@ const movieSchema = new mongoose.Schema({
     required: true,
 
     validate: {
-      validator: (v) =>
-        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
-          v,
-        ),
-      message: "Неправильный формат ссылки",
+      validator: (v) => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
+        v,
+      ),
+      message: 'Неправильный формат ссылки',
     },
   },
 
@@ -45,11 +43,10 @@ const movieSchema = new mongoose.Schema({
     required: true,
 
     validate: {
-      validator: (v) =>
-        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
-          v,
-        ),
-      message: "Неправильный формат ссылки",
+      validator: (v) => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
+        v,
+      ),
+      message: 'Неправильный формат ссылки',
     },
   },
 
@@ -57,17 +54,16 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (v) =>
-        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
-          v,
-        ),
-      message: "Неправильный формат ссылки",
+      validator: (v) => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(
+        v,
+      ),
+      message: 'Неправильный формат ссылки',
     },
   },
 
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
 
@@ -85,4 +81,4 @@ const movieSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("movie", movieSchema);
+module.exports = mongoose.model('movie', movieSchema);

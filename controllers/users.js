@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const User = require("../models/user");
+const User = require('../models/user');
 
-const { InvalidRequestError } = require("../errors/InvalidRequestError");
-const { ServerError } = require("../errors/ServerError");
-const { NotFoundError } = require("../errors/NotFoundError");
+const { InvalidRequestError } = require('../errors/InvalidRequestError');
+const { ServerError } = require('../errors/ServerError');
 
 // роут для получения информации о пользователе
 module.exports.getMe = (req, res, next) => {

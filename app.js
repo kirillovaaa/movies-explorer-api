@@ -1,36 +1,50 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const { errors } = require("celebrate");
+const { NODE_ENV, DATABASE_URL } = process.env;
 
-const { errorMiddleware } = require("./middlewares/error");
-const { authMiddleware } = require("./middlewares/auth");
+const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-const { requestLogger, errorLogger } = require("./middlewares/logger");
+const mongoose = require('mongoose');
+const { errors } = require('celebrate');
+const rateLimiter = require('./middlewares/rateLimiter');
 
-const authRouter = require("./routes/auth");
-const usersRouter = require("./routes/users");
-const moviesRouter = require("./routes/movies");
+const { errorMiddleware } = require('./middlewares/error');
+const { authMiddleware } = require('./middlewares/auth');
 
-const { NotFoundError } = require("./errors/NotFoundError");
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const authRoutes = require('./routes/auth');
+const routes = require('./routes');
+
+const { NotFoundError } = require('./errors/NotFoundError');
 
 const app = express();
 const port = 3000;
 
 // подключаемся к БД
-mongoose.connect("mongodb://127.0.0.1:27017/bitfilmsdb");
+mongoose.connect(
+  NODE_ENV === 'production'
+    ? DATABASE_URL
+    : 'mongodb://127.0.0.1:27017/bitfilmsdb',
+);
+
+// подключаем ограничитель трафика
+app.use(rateLimiter);
+
+// подключаем helmet
+app.use(helmet());
 
 // подключаем cors middleware
 app.use(
   cors({
     origin: [
-      "movies-diploma.nomoredomains.xyz",
-      "api.movies-diploma.nomoredomains.xyz",
+      'http://movies-diploma.nomoredomains.xyz',
+      'https://movies-diploma.nomoredomains.xyz',
     ],
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
   }),
 );
@@ -43,21 +57,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 // FIXME: удалить после ревью
-app.get("/crash-test", () => {
+app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error("Сервер сейчас упадёт");
+    throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
 
 // незащищенные роуты
-app.use(authRouter);
+app.use(authRoutes);
 
 // защита авторизацией
 app.use(authMiddleware);
 
 // защищенные роуты
-app.use(usersRouter);
-app.use(moviesRouter);
+app.use(routes);
 
 // обработка роута "*" - ошибка 404
 app.use((req, res, next) => {

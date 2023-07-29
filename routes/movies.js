@@ -1,23 +1,23 @@
-const router = require("express").Router();
-const mongoose = require("mongoose");
-const { Joi, celebrate } = require("celebrate");
+const router = require('express').Router();
+const mongoose = require('mongoose');
+const { Joi, celebrate } = require('celebrate');
 
 const JoiObjectId = Joi.string()
   .custom((value, helpers) => {
     const filtered = mongoose.Types.ObjectId.isValid(value);
-    return !filtered ? helpers.error("any.invalid") : value;
-  }, "invalid objectId")
+    return !filtered ? helpers.error('any.invalid') : value;
+  }, 'invalid objectId')
   .required();
 
 const {
-  getMovies,
-  createMovies,
-  deleteMoviesById,
-} = require("../controllers/movies");
+  getAllMovies,
+  createMovie,
+  deleteMovie,
+} = require('../controllers/movies');
 
-router.get("/movies", getMovies);
+router.get('/movies', getAllMovies);
 router.post(
-  "/movies",
+  '/movies',
   celebrate({
     body: Joi.object().keys({
       country: Joi.string().required(),
@@ -45,14 +45,17 @@ router.post(
       nameEN: Joi.string().required(),
     }),
   }),
-  createMovies,
+  createMovie,
 );
+
 router.delete(
-  "/movies/:moviesId",
+  '/movies/:movieId',
   celebrate({
     params: Joi.object().keys({
       movieId: JoiObjectId,
     }),
   }),
-  deleteMoviesById,
+  deleteMovie,
 );
+
+module.exports = router;
