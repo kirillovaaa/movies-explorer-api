@@ -1,14 +1,22 @@
-const winston = require('winston');
+const { transports, format } = require('winston');
 const expressWinston = require('express-winston');
 
+const { prettyPrint, combine } = format;
+
 const requestLogger = expressWinston.logger({
-  transports: [new winston.transports.File({ filename: 'request.log' })],
-  format: winston.format.json(),
+  transports: [new transports.File({ filename: 'request.log' })],
+  format: combine(
+    format.json(),
+    prettyPrint(),
+  ),
 });
 
 const errorLogger = expressWinston.errorLogger({
-  transports: [new winston.transports.File({ filename: 'error.log' })],
-  format: winston.format.json(),
+  transports: [new transports.File({ filename: 'error.log' })],
+  format: combine(
+    format.json(),
+    prettyPrint(),
+  ),
 });
 
 module.exports = {
