@@ -56,13 +56,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // обработчик логгера
 app.use(requestLogger);
 
-// FIXME: удалить после ревью
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
 // незащищенные роуты
 app.use(authRoutes);
 
