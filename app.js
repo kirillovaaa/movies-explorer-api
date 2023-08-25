@@ -19,8 +19,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const authRoutes = require('./routes/auth');
 const routes = require('./routes');
 
-const { NotFoundError } = require('./errors/NotFoundError');
-
 const app = express();
 const port = 3000;
 
@@ -38,16 +36,20 @@ app.use(rateLimiter);
 app.use(helmet());
 
 // подключаем cors middleware
-app.use(
-  cors({
-    origin: [
-      'http://movies-diploma.nomoredomains.xyz',
-      'https://movies-diploma.nomoredomains.xyz',
-    ],
-    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true,
-  }),
-);
+if (NODE_ENV === 'production') {
+  app.use(
+    cors({
+      origin: [
+        'http://movies-diploma.nomoredomains.xyz',
+        'https://movies-diploma.nomoredomains.xyz',
+      ],
+      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+      credentials: true,
+    }),
+  );
+} else {
+  app.use(cors());
+}
 
 // подключаем json парсер
 app.use(bodyParser.json());

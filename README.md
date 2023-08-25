@@ -1,3 +1,3 @@
-IP 51.250.0.40
+IP 158.160.105.148
 
 Backend https://api.movies-diploma.nomoredomains.xyz
