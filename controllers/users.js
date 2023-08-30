@@ -15,11 +15,11 @@ module.exports.getMe = (req, res, next) => {
 };
 // обновляем информацию о пользователе
 module.exports.updateUser = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
 
   User.findByIdAndUpdate(
     req.user._id,
-    { name, about },
+    { name, email },
     { new: true, runValidators: true },
   )
     .then((user) => res.send(user))
