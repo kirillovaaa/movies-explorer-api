@@ -35,21 +35,17 @@ app.use(rateLimiter);
 // подключаем helmet
 app.use(helmet());
 
-// подключаем cors middleware
-if (NODE_ENV === 'production') {
-  app.use(
-    cors({
-      origin: [
-        'http://movies-diploma.nomoredomains.xyz',
-        'https://movies-diploma.nomoredomains.xyz',
-      ],
-      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
-      credentials: true,
-    }),
-  );
-} else {
-  app.use(cors());
-}
+app.use(
+  cors({
+    origin: [
+      'localhost:3000',
+      'http://movies-diploma.nomoredomains.xyz',
+      'https://movies-diploma.nomoredomains.xyz',
+    ],
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true,
+  }),
+);
 
 // подключаем json парсер
 app.use(bodyParser.json());
