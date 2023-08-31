@@ -19,8 +19,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const authRoutes = require('./routes/auth');
 const routes = require('./routes');
 
-const { NotFoundError } = require('./errors/NotFoundError');
-
 const app = express();
 const port = 3000;
 
@@ -37,10 +35,10 @@ app.use(rateLimiter);
 // подключаем helmet
 app.use(helmet());
 
-// подключаем cors middleware
 app.use(
   cors({
     origin: [
+      'http://localhost:3000',
       'http://movies-diploma.nomoredomains.xyz',
       'https://movies-diploma.nomoredomains.xyz',
     ],
