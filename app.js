@@ -38,7 +38,7 @@ app.use(helmet());
 app.use(
   cors({
     origin: [
-      'localhost:3000',
+      'http://localhost:3000',
       'http://movies-diploma.nomoredomains.xyz',
       'https://movies-diploma.nomoredomains.xyz',
     ],
